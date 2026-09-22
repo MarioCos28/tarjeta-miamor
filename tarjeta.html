@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Feliz 21 de Septiembre 🌼</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --amarillo: #ffd93d;
+    --amarillo-suave: #fff3b0;
+    --rosa: #ff6f91;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    box-sizing: border-box;
+  }
+
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Segoe UI', Verdana, sans-serif;
+    background: linear-gradient(160deg, #fff8e1 0%, #ffe9b3 50%, #ffdca8 100%);
+    position: relative;
+  }
+
+  /* ---------- NOMBRE ARRIBA ---------- */
+  .nombre-header {
+    position: fixed;
+    top: calc(env(safe-area-inset-top, 0px) + 14px);
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  .nombre-header span {
+    display: inline-block;
+    font-family: 'Dancing Script', cursive;
+    font-weight: 700;
+    font-size: clamp(24px, 6vw, 40px);
+    color: #d97a00;
+    text-shadow: 0 2px 6px rgba(255, 217, 61, 0.6), 0 0 18px rgba(255, 111, 145, 0.25);
+    padding: 4px 22px;
+    background: rgba(255, 253, 245, 0.55);
+    border-radius: 999px;
+    backdrop-filter: blur(2px);
+    animation: brillito 3s ease-in-out infinite;
+  }
+
+  @keyframes brillito {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+  }
+
+  /* ---------- FONDO DE GIRASOLES ---------- */
+  .fondo-girasoles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .girasol-fondo {
+    position: absolute;
+    filter: drop-shadow(0 4px 6px rgba(90, 60, 10, 0.25));
+  }
+
+  /* ---------- SOBRE ---------- */
+  .contenedor {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    text-align: center;
+    width: 90vw;
+    max-width: 320px;
+  }
+
+  .sobre {
+    width: 100%;
+    max-width: 260px;
+    aspect-ratio: 260 / 180;
+    height: auto;
+    margin: 0 auto;
+    background: #8e44ad;
+    border-radius: 12px;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+    outline: none;
+  }
+
+  .sobre:hover, .sobre:focus-visible {
+    transform: scale(1.05);
+  }
+
+  .sobre::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 50% solid transparent;
+    border-right: 50% solid transparent;
+    border-top: 50% solid #a569bd;
+    z-index: 3;
+    transform-origin: top;
+    transition: transform 0.6s ease;
+  }
+
+  .sobre::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 50% solid transparent;
+    border-right: 50% solid transparent;
+    border-bottom: 50% solid #c39bd3;
+    z-index: 2;
+  }
+
+  .sobre.abierto::before {
+    transform: rotateX(180deg);
+    z-index: 1;
+  }
+
+  .texto-sobre {
+    position: absolute;
+    width: 100%;
+    top: 45%;
+    transform: translateY(-50%);
+    color: white;
+    font-weight: bold;
+    font-size: clamp(13px, 3.5vw, 15px);
+    letter-spacing: 1px;
+    z-index: 0;
+  }
+
+  /* ---------- CARTA / MENSAJE ---------- */
+  .carta {
+    width: min(480px, 92vw);
+    max-height: min(80vh, 640px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: #fffdf5;
+    border: 2px solid var(--amarillo);
+    border-radius: 16px;
+    padding: clamp(20px, 5vw, 35px) clamp(18px, 5vw, 30px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -45%) scale(0.9);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.7s ease;
+    z-index: 6;
+  }
+
+  .carta.visible {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: auto;
+  }
+
+  .carta h1 {
+    color: #e07a00;
+    font-size: clamp(20px, 5vw, 26px);
+    margin-bottom: 10px;
+  }
+
+  .carta p {
+    color: #5c4a1e;
+    font-size: clamp(14px, 3.6vw, 16px);
+    line-height: 1.6;
+    margin: 12px 0;
+  }
+
+  .firma {
+    margin-top: 20px;
+    font-style: italic;
+    color: var(--rosa);
+    font-weight: bold;
+  }
+
+  .oculto {
+    display: none;
+  }
+
+  .instruccion {
+    margin-top: 15px;
+    color: #a8763e;
+    font-size: 13px;
+  }
+
+  /* ---------- CANCIÓN DE SPOTIFY ---------- */
+  .cancion {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px dashed var(--amarillo);
+    text-align: center;
+  }
+
+  .cancion-etiqueta {
+    font-size: 13px;
+    color: #a8763e;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .boton-spotify {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #1DB954;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px 20px;
+    border-radius: 999px;
+    box-shadow: 0 6px 14px rgba(29, 185, 84, 0.35);
+    transition: transform 0.2s ease;
+  }
+
+  .boton-spotify:hover {
+    transform: scale(1.05);
+  }
+</style>
+</head>
+<body>
+
+  <!-- Nombre arriba -->
+  <div class="nombre-header"><span>Raquel González 🌻</span></div>
+
+  <!-- Fondo fijo de girasoles -->
+  <div class="fondo-girasoles" id="fondoGirasoles"></div>
+
+  <!-- Sobre inicial -->
+  <div class="contenedor" id="contenedor">
+    <div class="sobre" id="sobre" tabindex="0" role="button" aria-label="Abrir tarjeta">
+      <div class="texto-sobre">Toca aquí 💌</div>
+    </div>
+    <p class="instruccion">Haz clic o presiona Enter para abrir</p>
+  </div>
+
+  <!-- Carta con el mensaje (oculta al inicio) -->
+  <div class="carta" id="carta">
+    <h1>¡Feliz 21 de Septiembre! 🌼</h1>
+    <p>Mi amor ❤️🌻</p>
+    <p>
+      Hoy, 21 de septiembre, quiero aprovechar para recordarte lo mucho
+      que significas para mí. No necesito una fecha especial para
+      quererte, pero sí me gusta tener días como este para detenerme
+      un momento y decirte todo eso que a veces no sé cómo expresar.
+    </p>
+    <p>
+      Desde que llegaste a mi vida, muchas cosas se sienten diferentes.
+      Me gusta tenerte a mi lado, compartir momentos contigo, hablar de
+      cualquier cosa, reírnos juntos y hasta esos pequeños momentos que
+      quizá parecen insignificantes, pero que para mí terminan siendo
+      recuerdos muy importantes.
+    </p>
+    <p>
+      Quiero que sepas que te amo muchísimo. Te amo por la persona
+      que eres, por tu forma de ser, por tu manera de hacerme sentir
+      querido y por todas esas pequeñas cosas que haces sin darte cuenta.
+    </p>
+    <p>
+      Y si hoy se regalan flores, yo quiero regalarte algo que no se
+      marchite: mis palabras, mi cariño y la promesa de seguir cuidando
+      lo nuestro. 🌻💛
+    </p>
+    <p>
+      Gracias por estar conmigo, por formar parte de mi vida y por
+      permitirme compartir contigo tantos momentos. Espero que podamos
+      seguir creando muchos más recuerdos juntos, celebrar más fechas,
+      superar cualquier dificultad y seguir creciendo uno al lado del otro.
+    </p>
+    <p>
+      No sé qué nos tenga preparado el futuro, pero sí sé que mientras
+      pueda, quiero seguir eligiéndote, amándote y haciendo todo lo
+      posible para verte feliz.
+    </p>
+    <p>Feliz 21 de septiembre, mi amor. 🌻💛</p>
+    <p>
+      Te amo muchísimo, más de lo que a veces puedo explicar con
+      palabras.
+    </p>
+    <p class="firma">Con todo mi amor.</p>
+
+    <!-- CANCIÓN: reemplaza el href de abajo con el link de tu canción de Spotify -->
+    <div class="cancion">
+      <div class="cancion-etiqueta">Nuestra canción 🎶</div>
+      <a class="boton-spotify" href="https://open.spotify.com/track/5wBBoVjoounI5e36oI8oZe" target="_blank" rel="noopener">
+        ▶ Escuchar "Flores Amarillas" en Spotify
+      </a>
+    </div>
+  </div>
+
+  <script>
+    const sobre = document.getElementById('sobre');
+    const contenedor = document.getElementById('contenedor');
+    const carta = document.getElementById('carta');
+
+    function abrirTarjeta() {
+      sobre.classList.add('abierto');
+      setTimeout(() => {
+        contenedor.classList.add('oculto');
+        carta.classList.add('visible');
+      }, 500);
+    }
+
+    sobre.addEventListener('click', abrirTarjeta);
+    sobre.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        abrirTarjeta();
+      }
+    });
+
+    // ---------- Fondo fijo de girasoles realistas (SVG) ----------
+    const fondo = document.getElementById('fondoGirasoles');
+    let idCounter = 0;
+
+    // Dibuja un girasol realista: pétalos en dos capas + centro texturizado
+    function svgGirasol() {
+      const id = idCounter++;
+      const numPetalos = 16;
+      let petalosTraseros = '';
+      let petalosFrontales = '';
+
+      for (let i = 0; i < numPetalos; i++) {
+        const angulo = (360 / numPetalos) * i;
+        petalosTraseros += `<ellipse cx="50" cy="21" rx="9" ry="21"
+          fill="url(#petalOscuro${id})"
+          transform="rotate(${angulo + (360 / numPetalos) / 2} 50 50)" />`;
+        petalosFrontales += `<ellipse cx="50" cy="24" rx="8" ry="18"
+          fill="url(#petalClaro${id})"
+          transform="rotate(${angulo} 50 50)" />`;
+      }
+
+      let semillas = '';
+      const totalSemillas = 90;
+      const anguloDorado = 137.5;
+      for (let s = 0; s < totalSemillas; s++) {
+        const ang = s * anguloDorado * (Math.PI / 180);
+        const r = 1.35 * Math.sqrt(s);
+        if (r > 15) continue;
+        const sx = 50 + r * Math.cos(ang);
+        const sy = 50 + r * Math.sin(ang);
+        const tono = s % 2 === 0 ? '#4a2e15' : '#5e3a1c';
+        semillas += `<circle cx="${sx}" cy="${sy}" r="1" fill="${tono}" />`;
+      }
+
+      return `
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="petalOscuro${id}" cx="50%" cy="20%" r="80%">
+            <stop offset="0%" stop-color="#f2b632"/>
+            <stop offset="100%" stop-color="#d9820f"/>
+          </radialGradient>
+          <linearGradient id="petalClaro${id}" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#fff3b0"/>
+            <stop offset="55%" stop-color="#ffd93d"/>
+            <stop offset="100%" stop-color="#f7b733"/>
+          </linearGradient>
+          <radialGradient id="centro${id}" cx="40%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#8a5a2b"/>
+            <stop offset="70%" stop-color="#5c3818"/>
+            <stop offset="100%" stop-color="#3b230e"/>
+          </radialGradient>
+        </defs>
+
+        <path d="M 30 78 Q 10 85 8 105 Q 28 98 34 82 Z" fill="#5a8f3c"/>
+        <path d="M 70 78 Q 90 85 92 105 Q 72 98 66 82 Z" fill="#4c7a33"/>
+        <rect x="47" y="70" width="6" height="35" fill="#5a8f3c"/>
+
+        <g>${petalosTraseros}</g>
+        <g>${petalosFrontales}</g>
+
+        <circle cx="50" cy="50" r="17" fill="url(#centro${id})"/>
+        <g>${semillas}</g>
+        <circle cx="50" cy="50" r="17" fill="none" stroke="#2e1a0a" stroke-width="0.6" opacity="0.4"/>
+      </svg>`;
+    }
+
+    function generarFondoGirasoles() {
+      fondo.innerHTML = '';
+      const ancho = window.innerWidth;
+      const alto = window.innerHeight;
+
+      const grosorBorde = 30;
+      const esMovil = ancho < 640;
+      const divisorBorde = esMovil ? 14 : 8;
+      const divisorRelleno = esMovil ? 24 : 14;
+
+      const cantidad = Math.ceil((ancho + alto) / divisorBorde);
+
+      for (let i = 0; i < cantidad; i++) {
+        const contenedorGirasol = document.createElement('div');
+        contenedorGirasol.classList.add('girasol-fondo');
+        contenedorGirasol.innerHTML = svgGirasol();
+
+        const borde = Math.floor(Math.random() * 4);
+        let top, left;
+
+        if (borde === 0) {
+          top = Math.random() * grosorBorde;
+          left = Math.random() * 100;
+        } else if (borde === 1) {
+          top = 100 - Math.random() * grosorBorde;
+          left = Math.random() * 100;
+        } else if (borde === 2) {
+          top = Math.random() * 100;
+          left = Math.random() * grosorBorde;
+        } else {
+          top = Math.random() * 100;
+          left = 100 - Math.random() * grosorBorde;
+        }
+
+        const tamano = (esMovil ? 40 : 55) + Math.random() * (esMovil ? 45 : 65);
+        const rotacion = -20 + Math.random() * 40;
+
+        contenedorGirasol.style.top = top + '%';
+        contenedorGirasol.style.left = left + '%';
+        contenedorGirasol.style.width = tamano + 'px';
+        contenedorGirasol.style.height = tamano + 'px';
+        contenedorGirasol.style.transform = `translate(-50%, -50%) rotate(${rotacion}deg)`;
+        contenedorGirasol.style.opacity = 0.85 + Math.random() * 0.15;
+
+        fondo.appendChild(contenedorGirasol);
+      }
+
+      const cantidadRelleno = Math.ceil((ancho + alto) / divisorRelleno);
+      for (let i = 0; i < cantidadRelleno; i++) {
+        const relleno = document.createElement('div');
+        relleno.classList.add('girasol-fondo');
+        relleno.innerHTML = svgGirasol();
+
+        const top = Math.random() * 100;
+        const left = Math.random() * 100;
+        const tamano = (esMovil ? 20 : 30) + Math.random() * (esMovil ? 25 : 35);
+        const rotacion = -25 + Math.random() * 50;
+
+        relleno.style.top = top + '%';
+        relleno.style.left = left + '%';
+        relleno.style.width = tamano + 'px';
+        relleno.style.height = tamano + 'px';
+        relleno.style.transform = `translate(-50%, -50%) rotate(${rotacion}deg)`;
+        relleno.style.opacity = 0.45 + Math.random() * 0.25;
+
+        fondo.appendChild(relleno);
+      }
+    }
+
+    generarFondoGirasoles();
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(generarFondoGirasoles, 200);
+    });
+  </script>
+
+</body>
+</html>
